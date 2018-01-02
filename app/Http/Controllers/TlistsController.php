@@ -39,6 +39,13 @@ class TlistsController extends Controller
   {
     if (isset($_POST['delete']))
     {
+      if ($tlist->task->count() > 0)
+      {
+        foreach ($tlist->task as $task)
+        {
+          $task->delete();
+        }
+      }
       $tlist->delete();
       return redirect('/');
     }

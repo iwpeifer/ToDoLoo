@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+<style>
+  .padded {
+    padding: 0px;
+  }
+</style>
+
 @section('content')
 <div class="container">
   @if (Auth::check())
@@ -11,11 +17,12 @@
       {{ csrf_field() }}
     </form>
 
+  <div class="container">
     <Table class="Table">
       <tbody>
         @foreach($tlist->task as $task)
-          <tr>
-            <td>
+          <tr class="p-1">
+            <td class="padded">
               {{$task->description}}
             </td>
             <td>
@@ -30,6 +37,7 @@
         @endforeach
       </tbody>
     </table>
+  </div>
   @else
     <h3>You need to log in. <a href="/login">Click here to log in</a></h3>
   @endif
