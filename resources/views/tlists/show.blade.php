@@ -14,6 +14,7 @@
   }
 
   .task {
+    border-radius: 4px;
     max-width: 100%;
     overflow-x: scroll;
     padding: 10px;
@@ -21,9 +22,7 @@
     border: 1px solid lightgrey;
   }
 
-  td {
-    width: 33%;
-  }
+
 
 </style>
 
@@ -52,10 +51,20 @@
               </div>
             </td>
             <td>
+              @if ($task->completed)
+                <h2>✔️</h2>
+              @else
+                <h2>◻️</h2>
+              @endif
               Created {{ $task->created_at->diffForHumans() }}
             </td>
             <td>
               <form action="/tlists/{{$tlist->id}}/task/{{$task->id}}">
+                @if (!$task->completed)
+                  <button type="submit" name="completed" formmethod="POST" class="btn btn-success">Complete</button>
+                @else
+                  <button type="submit" name="completed" formmethod="POST" class="btn btn-warning">Uncomplete</button>
+                @endif
                 <button type="submit" name="edit" class="btn btn-primary">Edit</button>
                 <button type="submit" name="delete" formmethod="POST" class="btn btn-danger">Delete</button>
                 {{ csrf_field() }}

@@ -52,6 +52,18 @@ class TasksController extends Controller
         $task->delete();
         return redirect("tlists/$tlist->id");
       }
+      elseif (isset($_POST['completed'])) {
+        if (!$task->completed)
+        {
+          $task->completed = true;
+        }
+        else
+        {
+          $task->completed = false;
+        }
+        $task->save();
+        return redirect("tlists/$tlist->id");
+      }
       else
       {
         $validatedData = $request->validate([
