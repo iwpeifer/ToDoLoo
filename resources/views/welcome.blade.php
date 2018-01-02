@@ -3,26 +3,30 @@
 @section('content')
 <div class="container">
   @if (Auth::check())
-    <h2>Tasks List</h2>
-    <a href="/task" class="btn btn-primary">Add new Task</a>
+    <h2>Lists</h2>
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+      <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+    @endif
+
+    <form method="POST" action="/">
+        <input type="text" name="title" placeholder="New List"></input>
+        <button type="submit" class="btn btn-primary">Add</button>
+        {{ csrf_field() }}
+    </form>
+
     <Table class="Table">
-      <thread>
-        <tr>
-        <th colspan="2">Tasks</th>
-        </tr>
-      </thread>
       <tbody>
-        @foreach($user->tasks as $task)
+        @foreach($user->tlists as $tlist)
           <tr>
             <td>
-              {{$task->description}}
-            </td>
-            <td>
-              <form action="/task/{{$task->id}}">
-                <button type="submit" name="edit" class="btn btn-primary">Edit</button>
-                <button type="submit" name="delete" formmethod="POST" class="btn btn-danger">Delete</button>
-                {{ csrf_field() }}
-              </form>
+              <a href="/tlists/{{$tlist->id}}">{{$tlist->title}}</a>
             </td>
           </tr>
 

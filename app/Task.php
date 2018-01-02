@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    public function user()
+    public function tlist()
     {
-      return $this->belongsTo(User::class);
+      return $this->belongsTo('App\Tlist');
     }
 }

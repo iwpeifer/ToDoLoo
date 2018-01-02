@@ -14,7 +14,7 @@
     </div>
     @endif
 
-    <form method="POST" action="/task/{{ $task->id }}">
+    <form method="POST" action="/tlists/{{ $tlist->id }}/task/{{ $task->id }}">
 
       <div class="form-group">
         <textarea name="description" class="form-control">{{ $task->description}}</textarea>

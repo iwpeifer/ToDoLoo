@@ -9,9 +9,14 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public function tlists()
+    {
+      return $this->hasMany('App\Tlist');
+    }
+
     public function tasks()
     {
-      return $this->hasMany(Task::class);
+      return $this->hasManyThrough('App\Task', 'App\Tlist');
     }
 
     /**

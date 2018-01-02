@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Task;
+use App\Tlist;
 
 class TasksController extends Controller
 {
@@ -14,28 +15,28 @@ class TasksController extends Controller
       return view('welcome', compact('user'));
     }
 
-    public function add()
+    public function add(Tlist $tlist)
     {
-      return view('add');
+      return view('tasks/add', compact('tlist'));
     }
 
-    public function create(Request $request)
+    public function create(Request $request, Tlist $tlist)
     {
       $validatedData = $request->validate([
-        'description' => 'required|max:255'
+        'description' => 'required|max:140'
       ]);
       $task = new Task();
       $task->description = $request->description;
-      $task->user_id = Auth::id();
+      $task->tlist_id = $tlist->id;
       $task->save();
-      return redirect('/');
+      return redirect("tlists/$tlist->id");
     }
 
-    public function edit(Task $task)
+    public function edit(Tlist $tlist, Task $task)
     {
-      if (Auth::check() && Auth::user()->id == $task->user_id)
+      if (Auth::check() && Auth::user()->id == $tlist->user_id)
       {
-        return view('edit', compact('task'));
+        return view('tasks/edit', compact('task'));
       }
       else
       {
@@ -43,12 +44,12 @@ class TasksController extends Controller
       }
     }
 
-    public function update(Request $request, Task $task)
+    public function update(Request $request, Tlist $tlist, Task $task)
     {
       if (isset($_POST['delete']))
       {
         $task->delete();
-        return redirect('/');
+        return redirect("tlists/$tlist->id");
       }
       else
       {
@@ -57,7 +58,7 @@ class TasksController extends Controller
         ]);
         $task->description = $request->description;
         $task->save();
-        return redirect('/');
+        return redirect("tlists/$tlist->id");
       }
     }
 }
