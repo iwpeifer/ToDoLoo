@@ -15,7 +15,10 @@ class TlistsController extends Controller
   {
     if (Auth::check() && Auth::user()->id == $tlist->user_id)
     {
-      return view('tlists/show', compact('tlist'));
+      // pre-format date for view
+      $originalDate = explode(" ", $tlist->created_at)[0];
+      $newDate = date("m-d-Y", strtotime($originalDate));
+      return view('tlists/show', compact('tlist'), compact('newDate'));
     }
     else
     {

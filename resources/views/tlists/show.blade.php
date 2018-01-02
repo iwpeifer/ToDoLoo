@@ -4,13 +4,25 @@
   .padded {
     padding: 0px;
   }
+
+  h2, p {
+    display:inline;
+  }
+
+  .title {
+    margin: 10px 0 10px 0;
+  }
+
 </style>
 
 @section('content')
 <div class="container">
+  <a href="/">Back to Lists</a>
   @if (Auth::check())
-    <h2>{{$tlist->title}}</h2>
-    <a href="/">Back</a>
+    <div class="title">
+      <h2>{{$tlist->title}}</h2>
+      <p>Created {{$newDate}}</p>
+    </div class="p">
     <form method="POST" action="/tlists/{{$tlist->id}}">
       <a href="/tlists/{{$tlist->id}}/task" class="btn btn-primary">Add new Task</a>
       <button type="submit" name="delete" formmethod="POST" class="btn btn-danger">Delete List</button>
