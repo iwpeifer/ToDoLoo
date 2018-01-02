@@ -29,6 +29,7 @@ class TasksController extends Controller
       $task->description = $request->description;
       $task->tlist_id = $tlist->id;
       $task->save();
+
       return redirect("tlists/$tlist->id");
     }
 

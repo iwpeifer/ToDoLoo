@@ -13,6 +13,18 @@
     margin: 10px 0 10px 0;
   }
 
+  .task {
+    max-width: 100%;
+    overflow-x: scroll;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid lightgrey;
+  }
+
+  td {
+    width: 33%;
+  }
+
 </style>
 
 @section('content')
@@ -34,8 +46,13 @@
       <tbody>
         @foreach($tlist->task as $task)
           <tr class="p-1">
-            <td class="padded">
+            <td>
+              <div class="task">
               {{$task->description}}
+              </div>
+            </td>
+            <td>
+              Created {{ $task->created_at->diffForHumans() }}
             </td>
             <td>
               <form action="/tlists/{{$tlist->id}}/task/{{$task->id}}">
