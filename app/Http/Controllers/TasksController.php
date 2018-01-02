@@ -36,7 +36,7 @@ class TasksController extends Controller
     {
       if (Auth::check() && Auth::user()->id == $tlist->user_id)
       {
-        return view('tasks/edit', compact('task'));
+        return view('tasks/edit', compact('tlist'), compact('task'));
       }
       else
       {
