@@ -23,7 +23,7 @@ class TlistsController extends Controller
     }
   }
 
-  public function create(Request $request)
+  public function create(Request $request, Tlist $tlist)
   {
     $validatedData = $request->validate([
       'title' => 'required|max:140'
@@ -34,4 +34,14 @@ class TlistsController extends Controller
     $tlist->save();
     return redirect('/');
   }
+
+  public function update(Request $request, Tlist $tlist)
+  {
+    if (isset($_POST['delete']))
+    {
+      $tlist->delete();
+      return redirect('/');
+    }
+  }
+
 }

@@ -3,15 +3,15 @@
 @section('content')
 <div class="container">
   @if (Auth::check())
-    <h2>{{$tlist->title}} Tasks</h2>
+    <h2>{{$tlist->title}}</h2>
     <a href="/">Back</a>
-    <a href="/tlists/{{$tlist->id}}/task" class="btn btn-primary">Add new Task</a>
+    <form method="POST" action="/tlists/{{$tlist->id}}">
+      <a href="/tlists/{{$tlist->id}}/task" class="btn btn-primary">Add new Task</a>
+      <button type="submit" name="delete" formmethod="POST" class="btn btn-danger">Delete List</button>
+      {{ csrf_field() }}
+    </form>
+
     <Table class="Table">
-      <thread>
-        <tr>
-        <th colspan="2">Tasks</th>
-        </tr>
-      </thread>
       <tbody>
         @foreach($tlist->task as $task)
           <tr>

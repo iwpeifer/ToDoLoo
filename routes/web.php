@@ -11,10 +11,12 @@
 |
 */
 
+Auth::routes();
+
 Route::get('/', 'TasksController@index');
 Route::post('/', 'TlistsController@create');
 
-Auth::routes();
+Route::post('/tlists/{tlist}', 'TlistsController@update');
 
 Route::get('/tlists/{tlist}/task', 'TasksController@add');
 Route::post('/tlists/{tlist}/task', 'TasksController@create');
