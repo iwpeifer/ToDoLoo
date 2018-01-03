@@ -1,9 +1,17 @@
 @extends('layouts.app')
 
+<style>
+
+  h2, p {
+    display:inline;
+  }
+
+</style>
+
 @section('content')
 <div class="container">
   @if (Auth::check())
-    <h2>Lists</h2>
+    <h2>My Lists</h2>
 
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -26,7 +34,17 @@
         @foreach($user->tlists as $tlist)
           <tr>
             <td>
-              <a href="/tlists/{{$tlist->id}}">{{$tlist->title}}</a>
+              <h2><a href="/tlists/{{$tlist->id}}">{{$tlist->title}}</a></h2>
+              <?php
+              $completed = 0;
+              $total = $tlist->task->count();
+              foreach ($tlist->task as $task) {
+                if ($task->status == 'complete') {
+                  $completed++;
+                }
+              }
+              echo "$completed/$total tasks completed";
+            ?>
             </td>
           </tr>
 
