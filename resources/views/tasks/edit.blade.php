@@ -18,6 +18,11 @@
 
       <div class="form-group">
         <textarea name="description" class="form-control">{{ $task->description}}</textarea>
+        @if ($task->priority == "high")
+          <label class="checkbox-inline"><input type="checkbox" name="priority" value="high" checked="checked">Urgent</label>
+        @else
+          <label class="checkbox-inline"><input type="checkbox" name="priority" value="high">Urgent</label>
+        @endif
       </div>
 
       <div class="form-group">

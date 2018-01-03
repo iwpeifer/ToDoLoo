@@ -17,6 +17,7 @@
   <form method="POST" action="/tlists/{{$tlist->id}}/task">
     <div class="form-group">
       <textarea name="description" class="form-control"></textarea>
+      <label class="checkbox-inline"><input type="checkbox" name="priority" value="high">Urgent</label>
     </div>
 
     <div class="form-group">

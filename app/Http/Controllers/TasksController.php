@@ -28,6 +28,10 @@ class TasksController extends Controller
       $task = new Task();
       $task->description = $request->description;
       $task->tlist_id = $tlist->id;
+      if (isset($request->priority))
+      {
+        $task->priority = $request->priority;
+      }
       $task->save();
 
       return redirect("tlists/$tlist->id");
@@ -52,14 +56,14 @@ class TasksController extends Controller
         $task->delete();
         return redirect("tlists/$tlist->id");
       }
-      elseif (isset($_POST['completed'])) {
-        if (!$task->completed)
+      elseif (isset($_POST['complete'])) {
+        if ($task->status == 'incomplete')
         {
-          $task->completed = true;
+          $task->status = 'complete';
         }
         else
         {
-          $task->completed = false;
+          $task->status = 'incomplete';
         }
         $task->save();
         return redirect("tlists/$tlist->id");
@@ -70,6 +74,14 @@ class TasksController extends Controller
           'description' => 'required|max:255'
         ]);
         $task->description = $request->description;
+        if (isset($request->priority))
+        {
+          $task->priority = $request->priority;
+        }
+        else
+        {
+          $task->priority = "low";
+        }
         $task->save();
         return redirect("tlists/$tlist->id");
       }

@@ -20,9 +20,31 @@
     padding: 10px;
     background-color: white;
     border: 1px solid lightgrey;
+    position: relative;
   }
 
+  .complete {
+    color: rgb(51,176,124);
+  }
 
+  .task.complete {
+    background-color: #f1f8e9;
+    border-color: rgb(51,176,124);
+  }
+
+  /*.high {
+    background-color: lightpink;
+    color: white;
+  }*/
+
+  .tag {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    top: 2;
+    border-radius: 50%;
+  }
 
 </style>
 
@@ -40,30 +62,32 @@
       {{ csrf_field() }}
     </form>
 
-  <div class="container">
+  <div>
     <Table class="Table">
       <tbody>
         @foreach($tlist->task as $task)
           <tr class="p-1">
             <td>
-              <div class="task">
-              {{$task->description}}
+              <div class="task {{ $task->status }}">
+              {{ $task->description }}
+              @if ($task->priority == "high")
+                <div class="tag">❗</div>
+              @endif
               </div>
             </td>
             <td>
-              @if ($task->completed)
-                <h2>✔️</h2>
+              @if ($task->status == 'complete')
+                <p class="complete">Completed {{ $task->updated_at->diffForHumans() }}</p>
               @else
-                <h2>◻️</h2>
+                Created {{ $task->created_at->diffForHumans() }}
               @endif
-              Created {{ $task->created_at->diffForHumans() }}
             </td>
             <td>
               <form action="/tlists/{{$tlist->id}}/task/{{$task->id}}">
-                @if (!$task->completed)
-                  <button type="submit" name="completed" formmethod="POST" class="btn btn-success">Complete</button>
+                @if ($task->status == 'incomplete')
+                  <button type="submit" name="complete" formmethod="POST" class="btn btn-default">✔️</button>
                 @else
-                  <button type="submit" name="completed" formmethod="POST" class="btn btn-warning">Uncomplete</button>
+                  <button type="submit" name="complete" formmethod="POST" class="btn btn-success">✔️</button>
                 @endif
                 <button type="submit" name="edit" class="btn btn-primary">Edit</button>
                 <button type="submit" name="delete" formmethod="POST" class="btn btn-danger">Delete</button>

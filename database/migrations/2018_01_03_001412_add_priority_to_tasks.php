@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddCompletedToTasks extends Migration
+class AddPriorityToTasks extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class AddCompletedToTasks extends Migration
     {
       Schema::table('tasks', function($table)
       {
-        $table->boolean('completed')->default(false);
+        $table->string('priority')->default('low');
       });
     }
 
